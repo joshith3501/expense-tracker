@@ -1,48 +1,58 @@
 import React, {
-  useState,
-  useContext,
-  useEffect,
   useReducer,
-  Dispatch,
-  SetStateAction,
-  ReactNode,
 } from "react";
 
 type TransactionsProps = {
   id: number;
   amount: number;
   type: string;
+  text: string;
 };
+
+type TransactionContextProps = {
+  transactions: TransactionsProps[];
+  addIncomeTransaction : (e: number) => void;
+  addExpenseTransaction : (e:number) => void;
+  removeTransaction : (e:number) => void;
+}
 
 const transactions: TransactionsProps[] = [
-  { id: 1, amount: 500, type: "expense" },
+  { id: 1, amount: 500, type: "expense", text:"pocket money" },
 ];
-const TransactionContext = React.createContext(transactions);
+export const TransactionContext = React.createContext<TransactionContextProps>({
+  transactions:transactions,
+  addIncomeTransaction:()=>{},
+  addExpenseTransaction:()=>{},
+  removeTransaction:()=>{},
+});
 
-const TransactionReducer = (transaction: any, action: { type: string, payload: {amount?:number, id?:number} }) => {
+const TransactionReducer = (transactionState: any, action: { type: string, payload: {amount?:number, id?:number} }) => {
   switch (action.type) {
     case "ADD_INCOME":
-      return [...transaction,{id:transaction.length+1, amount:action.payload.amount,type:"income"}];
+      return [...transactionState,{id:transactionState.length+1, amount:action.payload.amount,type:"income"}];
     case "ADD_EXPENSE":
-      return [...transaction,{id:transaction.length+1,amount:action.payload.amount,type:"expense"}];
+      return [...transactionState,{id:transactionState.length+1,amount:action.payload.amount,type:"expense"}];
     case "REMOVE_TRANSACTION":
-      return [...transaction].filter((transaction)=>{transaction.id !== action.payload.id});
+      return [...transactionState].filter((transaction)=>{transaction.id !== action.payload.id});
     default:
-      return transaction;
+      return transactionState;
   }
 };
 
-const TransactionProvider = ({ children }: any) => {
-  const [transaction, dispatch] = useReducer(TransactionReducer, transactions);
+export const TransactionProvider = ({ children }: any) => {
+  const [transactionState, dispatch] = useReducer(TransactionReducer, transactions);
 
-  const addIncomeTransaction = (e: number) => {
-    dispatch({ type: "ADD_INCOME", payload: { amount: e } });
+  const addIncomeTransaction = (amount: number) => {
+    dispatch({ type: "ADD_INCOME", payload: { amount } });
   };
 
-  const addExpenseTransaction = (e:number) => {
-    dispatch({type:"ADD_EXPENSE", payload: {amount: e}});
+  const addExpenseTransaction = (amount:number) => {
+    dispatch({type:"ADD_EXPENSE", payload: {amount}});
   }
 
+  const removeTransaction = (id:number) => {
+    dispatch({type:"REMOVE_TRANSACTION", payload:{id}})
+  }
   
   // useEffect (()=>{
   //   if(transaction !== null) {
@@ -57,11 +67,18 @@ const TransactionProvider = ({ children }: any) => {
   //   }
   // }, [transaction])
 
+  const contextValues : TransactionContextProps = {
+    transactions:transactionState,
+    addIncomeTransaction,
+    addExpenseTransaction,
+    removeTransaction,
+  }
+  
+
   return (
-    <TransactionContext.Provider value={transaction}>
+    <TransactionContext.Provider value={contextValues}>
       {children}
     </TransactionContext.Provider>
   );
 };
 
-export default TransactionProvider;
