@@ -1,9 +1,77 @@
-/* #root {
-  max-width: 1280px;
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+
+#root {
+  width:100vw;
+  min-height:100vh;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+  font-family: 'Roboto', sans-serif; 
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  background-color: hsl(0, 0%, 7%);
+  color:hsl(0,0%,93%);
 }
+
+
+*,
+*::after,
+*::before {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body {
+  margin:0;
+}
+
+
+.main-page {
+  width:20rem;
+  background-color:#202020;
+  border:1px solid black;
+  border-radius:0.1rem;
+}
+
+.main-page > * {
+  margin:1rem 0.5rem;
+}
+
+.balance-output {
+  text-align:left;
+}
+
+.balance-output-number {
+  font-size:2em;
+}
+
+.income-expense-container {
+  display:flex;
+  justify-content: space-around;
+  padding:1rem;
+  margin:2rem 0.5rem;
+  border-radius:0.1rem;
+  box-shadow: rgba(255, 255, 255, 0.1) 0px 4px 12px;
+}
+
+.income-output > span{
+  color:hsl(124, 100%, 40%);
+}
+
+.expense-output > span {
+  color:hsl(10, 100%, 40%);
+}
+
+.transaction-element {
+  width:100%;
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  border-right:0.3rem solid green;
+}
+/*
 
 .logo {
   height: 6em;

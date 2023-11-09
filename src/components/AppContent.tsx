@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import TransactionHistory from "./TransactionHistory";
-
+import TransactionForm from "./TransactionForm";
 import { TransactionContext } from "./TransactionProvider";
 
 function AppContent() {
@@ -8,10 +8,7 @@ function AppContent() {
     useContext(TransactionContext);
   const [index, setIndex] = useState(0);
 
-  const handleClick = () => {
-    addIncomeTransaction(10);
-    setIndex(1);
-  };
+  const balance = transactions.reduce((sum, transaction)=>(sum + transaction.amount),0)
 
   useEffect(() => {
     console.log(transactions);
@@ -19,17 +16,26 @@ function AppContent() {
 
   return (
     <>
-      <h1>Expense Tracker</h1>
+    <section className="main-page">
+      <h2 style={{textAlign:"left"}}>Expense Tracker</h2>
       <article className="balance-output">
-        <h2>Your Balance</h2>
-        {/* <span>{transactions[index].amount}</span> */}
-        {transactions.length > index && (
-          <span>{transactions[index].amount}</span>
-        )}
-        <button onClick={handleClick}>Click me to add</button>
+        <h4>Your Balance</h4>
+        <span className="balance-output-number">${balance}</span>
+        <div className="income-expense-container">
+          <div className="income-output">
+            <p>Income</p>
+            <span>+$0</span>
+          </div>
+          <div className="expense-output">
+            <p>Expense</p>
+            <span>-$0</span>
+          </div>
+        </div>
       </article>
       <TransactionHistory />
+      <TransactionForm />
       <section className="transaction-note"></section>
+    </section>
     </>
   );
 }
