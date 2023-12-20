@@ -6,7 +6,6 @@ import { TransactionContext } from "./TransactionProvider";
 function AppContent() {
   const { transactions, addIncomeTransaction, addExpenseTransaction } =
     useContext(TransactionContext);
-  const [index, setIndex] = useState(0);
 
   const balance = transactions.reduce((sum, transaction)=>(sum + transaction.amount),0)
 

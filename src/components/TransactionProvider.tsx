@@ -11,14 +11,12 @@ type TransactionsProps = {
 
 type TransactionContextProps = {
   transactions: TransactionsProps[];
-  addIncomeTransaction : (e: number) => void;
-  addExpenseTransaction : (e:number) => void;
+  addIncomeTransaction : (f: string, e: number) => void;
+  addExpenseTransaction : (f:string, e:number) => void;
   removeTransaction : (e:number) => void;
 }
 
 const transactions: TransactionsProps[] = [
-  { id: 1, amount: 500, type: "income", text:"pocket money" },
-  { id: 2, amount: 200, type: "expense", text:"bought snacks"},
   
 ];
 export const TransactionContext = React.createContext<TransactionContextProps>({
@@ -28,12 +26,12 @@ export const TransactionContext = React.createContext<TransactionContextProps>({
   removeTransaction:()=>{},
 });
 
-const TransactionReducer = (transactionState: any, action: { type: string, payload: {amount?:number, id?:number} }) => {
+const TransactionReducer = (transactionState: any, action: { type: string, payload: {name ?: string, amount?:number, id?:number} }) => {
   switch (action.type) {
     case "ADD_INCOME":
-      return [...transactionState,{id:Date.now(), amount:action.payload.amount,type:"income"}];
+      return [...transactionState,{id:Date.now(),text:action.payload.name, amount:action.payload.amount,type:"income"}];
     case "ADD_EXPENSE":
-      return [...transactionState,{id:Date.now(),amount:action.payload.amount,type:"expense"}];
+      return [...transactionState,{id:Date.now(),text:action.payload.name, amount:action.payload.amount,type:"expense"}];
     case "REMOVE_TRANSACTION":
       return [...transactionState].filter((transaction)=>{transaction.id !== action.payload.id});
     default:
@@ -44,12 +42,12 @@ const TransactionReducer = (transactionState: any, action: { type: string, paylo
 export const TransactionProvider = ({ children }: any) => {
   const [transactionState, dispatch] = useReducer(TransactionReducer, transactions);
 
-  const addIncomeTransaction = (amount: number) => {
-    dispatch({ type: "ADD_INCOME", payload: { amount } });
+  const addIncomeTransaction = (name: string, amount: number) => {
+    dispatch({ type: "ADD_INCOME", payload: { name, amount } });
   };
 
-  const addExpenseTransaction = (amount:number) => {
-    dispatch({type:"ADD_EXPENSE", payload: {amount}});
+  const addExpenseTransaction = (name: string, amount:number) => {
+    dispatch({type:"ADD_EXPENSE", payload: {name, amount}});
   }
 
   const removeTransaction = (id:number) => {

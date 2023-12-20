@@ -6,13 +6,6 @@ import { TransactionContext } from "./TransactionProvider";
 const TransactionForm = () => {
   const { addIncomeTransaction, addExpenseTransaction } = useContext(TransactionContext)
 
-  // const initialFormData = {
-  //   name: "",
-  //   type: "",
-  //   amount: "",
-  // }
-
-  // const [formData, setFormData] = useState(initialFormData);
   const [transactionName, setTransactionName] = useState("");
   const [transactionType, setTransactionType] = useState("");
   const [transactionAmount, setTransactionAmount] = useState("");
@@ -27,9 +20,9 @@ const TransactionForm = () => {
 
     } else {
       if(transactionType==="income") {
-        addIncomeTransaction(+transactionAmount)
+        addIncomeTransaction(transactionName, +transactionAmount)
       } else if (transactionType === "expense") {
-        addExpenseTransaction(+transactionAmount)
+        addExpenseTransaction(transactionName, +transactionAmount)
       }
     }
 
