@@ -1,0 +1,54 @@
+form {
+  margin:2rem 0rem;
+  display:flex;
+  flex-direction: column;
+  align-items:flex-start;
+
+}
+
+form > * {
+  margin: 0.2rem 0;
+}
+
+
+.input-element {
+  background-color: hsl(0, 0%, 7%);
+  border:0.1rem solid hsl(0, 0%, 7%);
+  padding:0.5rem;
+  width:100%;
+  color:white;
+  outline:none;
+  transition: all 0.5s;
+}
+
+.input-element:focus {
+  border: 0.1rem solid hsla(270, 76%, 68%, 0.516);
+}
+
+.transaction-submit-button {
+  padding: 0.5rem 1rem;
+  border-radius:0.5rem;
+  background-color:hsla(270, 76%, 68%, 0.516);
+  font-weight:700;
+  border:none;
+  color:white;
+}
+
+.transaction-type-selection {
+  display:flex;
+
+}
+
+.transaction-type-selection > * {
+  margin-right:0.5rem;
+}
+
+.transaction-submit-button {
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.transaction-submit-button:hover {
+  background-color: white;
+  color: hsla(270, 76%, 28%, 0.516);
+}

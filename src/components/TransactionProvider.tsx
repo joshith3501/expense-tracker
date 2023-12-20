@@ -17,7 +17,9 @@ type TransactionContextProps = {
 }
 
 const transactions: TransactionsProps[] = [
-  { id: 1, amount: 500, type: "expense", text:"pocket money" },
+  { id: 1, amount: 500, type: "income", text:"pocket money" },
+  { id: 2, amount: 200, type: "expense", text:"bought snacks"},
+  
 ];
 export const TransactionContext = React.createContext<TransactionContextProps>({
   transactions:transactions,
@@ -29,9 +31,9 @@ export const TransactionContext = React.createContext<TransactionContextProps>({
 const TransactionReducer = (transactionState: any, action: { type: string, payload: {amount?:number, id?:number} }) => {
   switch (action.type) {
     case "ADD_INCOME":
-      return [...transactionState,{id:transactionState.length+1, amount:action.payload.amount,type:"income"}];
+      return [...transactionState,{id:Date.now(), amount:action.payload.amount,type:"income"}];
     case "ADD_EXPENSE":
-      return [...transactionState,{id:transactionState.length+1,amount:action.payload.amount,type:"expense"}];
+      return [...transactionState,{id:Date.now(),amount:action.payload.amount,type:"expense"}];
     case "REMOVE_TRANSACTION":
       return [...transactionState].filter((transaction)=>{transaction.id !== action.payload.id});
     default:

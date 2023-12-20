@@ -8,7 +8,7 @@ const TransactionHistory = () => {
     <section className="transaction-history">
       {
         transactions.map((transaction) => (
-          <div className="transaction-element">
+          <div className={`transaction-element ${transaction.type}`} key={Date.now()}>
             <div>{transaction.text}</div>
             <div>{transaction.amount}</div>
           </div>
